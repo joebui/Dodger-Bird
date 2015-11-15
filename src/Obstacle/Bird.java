@@ -7,7 +7,6 @@ public class Bird extends Obstacle {
 
     public Bird(int x, int y) {
         super(x, y);
-
         initBird();
     }
 
@@ -21,6 +20,7 @@ public class Bird extends Obstacle {
         y += dy;
     }
 
+    // accept user's input.
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();

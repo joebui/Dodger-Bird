@@ -15,6 +15,7 @@ public class Window extends JPanel implements ActionListener {
     private ArrayList<Wheel> wheels;
 
     public Window() {
+        // keyboard listener.
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -43,6 +44,7 @@ public class Window extends JPanel implements ActionListener {
         timer.start();
     }
 
+    // display the objects on screen.
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -63,6 +65,7 @@ public class Window extends JPanel implements ActionListener {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    // this method will be called recursively to update the object.
     @Override
     public void actionPerformed(ActionEvent e) {
         updateMissiles();
