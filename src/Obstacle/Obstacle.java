@@ -8,17 +8,19 @@ public abstract class Obstacle {
     protected int y;
     protected int width;
     protected int height;
-    protected boolean vis;
+    protected boolean isVisible;
     protected Image image;
 
     public Obstacle(int x, int y) {
 
         this.x = x;
         this.y = y;
-        vis = true;
+        isVisible = true;
     }
 
     public abstract void move();
+
+    public abstract void initObstacle();
 
     protected void loadImage(String imageName) {
 
@@ -45,11 +47,11 @@ public abstract class Obstacle {
     }
 
     public boolean isVisible() {
-        return vis;
+        return isVisible;
     }
 
-    public void setVisible(Boolean visible) {
-        vis = visible;
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 
     public int getWidth() {

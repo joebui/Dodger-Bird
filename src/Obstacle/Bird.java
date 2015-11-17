@@ -3,21 +3,22 @@ package Obstacle;
 import java.awt.event.KeyEvent;
 
 public class Bird extends Obstacle {
-    private int dy;
+    private int speed;
 
     public Bird(int x, int y) {
         super(x, y);
-        initBird();
+        initObstacle();
     }
 
-    private void initBird() {
+    @Override
+    public void initObstacle() {
         loadImage("images/Bird.gif");
         getImageDimensions();
     }
 
     @Override
     public void move() {
-        y += dy;
+        y += speed;
     }
 
     // accept user's input.
@@ -26,11 +27,11 @@ public class Bird extends Obstacle {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
-            dy = -2;
+            speed = -2;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 2;
+            speed = 2;
         }
     }
 
@@ -39,11 +40,11 @@ public class Bird extends Obstacle {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
-            dy = 0;
+            speed = 0;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 0;
+            speed = 0;
         }
     }
 }

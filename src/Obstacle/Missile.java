@@ -3,10 +3,11 @@ package Obstacle;
 public class Missile extends Obstacle {
     public Missile(int x, int y) {
         super(x, y);
-        initMissile();
+        initObstacle();
     }
 
-    private void initMissile() {
+    @Override
+    public void initObstacle() {
         loadImage("images/Rocket.gif");
         getImageDimensions();
     }
@@ -18,7 +19,7 @@ public class Missile extends Obstacle {
 
         // missile goes over the window border.
         if (x < 10) {
-            vis = false;
+            isVisible = false;
         }
     }
 }

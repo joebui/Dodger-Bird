@@ -3,7 +3,7 @@ package Obstacle;
 public class Wheel extends Obstacle {
     public Wheel(int x, int y) {
         super(x, y);
-        initWheel();
+        initObstacle();
     }
 
     @Override
@@ -13,11 +13,12 @@ public class Wheel extends Obstacle {
 
         // wheel goes over the window border.
         if (x < 10) {
-            vis = false;
+            isVisible = false;
         }
     }
 
-    private void initWheel() {
+    @Override
+    public void initObstacle() {
         loadImage("images/Obstacle.gif");
         getImageDimensions();
     }
