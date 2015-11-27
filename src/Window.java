@@ -47,19 +47,23 @@ public class Window extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+<<<<<<< HEAD
         g.drawImage(new ImageIcon("images/background.png").getImage(), 0, 0, null);
 
+=======
+>>>>>>> origin/master
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(bird.getImage(), bird.getX(),
-                bird.getY(), this);
 
+        if (bird.isVisible()) {
+            g2d.drawImage(bird.getImage(), bird.getX(), bird.getY(), this);
 
-        for (Missile m : missiles) {
-            g2d.drawImage(m.getImage(), m.getX(), m.getY(), this);
-        }
+            for (Missile m : missiles) {
+                g2d.drawImage(m.getImage(), m.getX(), m.getY(), this);
+            }
 
-        for (Wheel w : wheels) {
-            g2d.drawImage(w.getImage(), w.getX(), w.getY(), this);
+            for (Wheel w : wheels) {
+                g2d.drawImage(w.getImage(), w.getX(), w.getY(), this);
+            }
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -113,6 +117,7 @@ public class Window extends JPanel implements ActionListener {
             Rectangle mr = m.getBound();
             if (birdBound.intersects(mr)) {
                 m.setVisible(false);
+                bird.setVisible(false);
             }
         }
 
@@ -120,6 +125,7 @@ public class Window extends JPanel implements ActionListener {
             Rectangle wr = w.getBound();
             if (birdBound.intersects(wr)) {
                 w.setVisible(false);
+                bird.setVisible(false);
             }
         }
     }
@@ -131,7 +137,7 @@ public class Window extends JPanel implements ActionListener {
                 while (true) {
                     try {
                         missiles.add(new Missile(600, bird.getY() + bird.getHeight() / 2));
-                        sleep(20000);
+                        sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
