@@ -6,8 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class Window extends JPanel implements ActionListener {
     private Bird bird;
@@ -48,6 +47,7 @@ public class Window extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.drawImage(new ImageIcon("images/background.png").getImage(), 0, 0, null);
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(bird.getImage(), bird.getX(),

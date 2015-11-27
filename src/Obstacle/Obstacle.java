@@ -25,7 +25,7 @@ public abstract class Obstacle {
     protected void loadImage(String imageName) {
 
         Image bird = new ImageIcon(imageName).getImage();
-        ImageIcon scaled = new ImageIcon(bird.getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        ImageIcon scaled = new ImageIcon(bird.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         image = scaled.getImage();
     }
 
