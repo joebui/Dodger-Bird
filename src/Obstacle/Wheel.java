@@ -8,11 +8,10 @@ public class Wheel extends Obstacle {
 
     @Override
     public void move() {
-        // speed of the wheel.
         x -= 3;
 
-        // wheel goes over the window border.
-        if (x < 10) {
+        // Destroy when going out of the border.
+        if (x < 1) {
             isVisible = false;
         }
     }
