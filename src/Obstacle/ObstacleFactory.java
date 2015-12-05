@@ -8,7 +8,7 @@ public class ObstacleFactory {
             return new Missile(x, y);
         // Get wheel object.
         } else if (type.equalsIgnoreCase("wheel")) {
-            return new Wheel(x, y);
+            return new Spikes(x, y);
         } else {
             return null;
         }

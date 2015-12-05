@@ -4,14 +4,18 @@ import Obstacle.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class Window extends JPanel implements ActionListener {
     private Bird bird;
     private ArrayList<Missile> missiles;
-    private ArrayList<Wheel> wheels;
+    private ArrayList<Spikes> wheels;
     private Thread firingWheels;
     private Thread firingMissiles;
     private ObstacleFactory factory;
@@ -48,6 +52,7 @@ public class Window extends JPanel implements ActionListener {
         fireWheel();
         Timer timer = new Timer(10, this);
         timer.start();
+        music();
     }
 
     // Display the objects on screen.
@@ -76,7 +81,7 @@ public class Window extends JPanel implements ActionListener {
                 g2d.drawImage(m.getImage(), m.getX(), m.getY(), this);
             }
 
-            for (Wheel w : wheels) {
+            for (Spikes w : wheels) {
                 g2d.drawImage(w.getImage(), w.getX(), w.getY(), this);
             }
         }
@@ -108,7 +113,7 @@ public class Window extends JPanel implements ActionListener {
 
     private void updateWheel() {
         for (int i = 0; i < wheels.size(); i++) {
-            Wheel w = wheels.get(i);
+            Spikes w = wheels.get(i);
 
             if (w.isVisible()) {
                 w.move();
@@ -134,7 +139,7 @@ public class Window extends JPanel implements ActionListener {
             }
         }
 
-        for (Wheel w : wheels) {
+        for (Spikes w : wheels) {
             Rectangle wr = w.getBound();
             if (birdBound.intersects(wr)) {
                 // Make bird disappear and notify other objects in game.
@@ -150,10 +155,12 @@ public class Window extends JPanel implements ActionListener {
             public void run() {
                 while (true) {
                     try {
-                        // Get missile object.
+                        sleep(10000);
+                        // Play rocket shooting sound.
+                        rocketSound();
+                        // Fire missile
                         Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 2);
                         missiles.add((Missile) missile);
-                        sleep(10000);
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -164,16 +171,39 @@ public class Window extends JPanel implements ActionListener {
         firingWheels.start();
     }
 
+    private synchronized void rocketSound() {
+        try {
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/RocketShoot.wav"));
+            clip.open(inputStream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private synchronized void music() {
+        try {
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/BackgroundMusic.wav"));
+            clip.open(inputStream);
+            // Play background music endlessly.
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch(Exception error)  {
+            System.out.println(error.getMessage());
+        }
+    }
+
     private void fireWheel() {
         firingMissiles = new Thread() {
             @Override
             public void run() {
                 while (true) {
                     try {
-                        // Get wheel object.
+                        // Spawn wheel
                         Obstacle wheel = factory.getObstacle("wheel", 1024, new Random().nextInt(610) + 10);
-                        wheels.add((Wheel) wheel);
-                        sleep(800);
+                        wheels.add((Spikes) wheel);
+                        sleep(1000);
                     } catch (Exception e) {
                         System.out.println(e);
                     }

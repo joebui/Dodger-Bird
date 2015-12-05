@@ -16,14 +16,15 @@ public class GameTimer extends Observer {
         timerThread = new Thread() {
             @Override
             public void run() {
-                while (true) {
-                    try {
+                try {
+                    sleep(1000);
+                    while (true) {
                         // Increase number of seconds.
                         increaseTime();
                         sleep(1000);
-                    } catch (InterruptedException e) {
-                        System.out.println(e);
                     }
+                } catch (InterruptedException e) {
+                    System.out.println(e);
                 }
             }
         };
