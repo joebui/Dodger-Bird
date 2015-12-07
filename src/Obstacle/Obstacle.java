@@ -12,7 +12,6 @@ public abstract class Obstacle {
     protected Image image;
 
     public Obstacle(int x, int y) {
-
         this.x = x;
         this.y = y;
         isVisible = true;
@@ -22,12 +21,7 @@ public abstract class Obstacle {
 
     public abstract void initObstacle();
 
-    protected void loadImage(String imageName) {
-
-        Image bird = new ImageIcon(imageName).getImage();
-        ImageIcon scaled = new ImageIcon(bird.getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-        image = scaled.getImage();
-    }
+    protected abstract void loadImage(String imageName);
 
     protected void getImageDimensions() {
         width = image.getWidth(null);
