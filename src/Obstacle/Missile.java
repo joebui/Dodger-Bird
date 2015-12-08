@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Missile extends Obstacle {
-    public Missile(int x, int y) {
-        super(x, y);
+    public Missile(int x, int y, int speed) {
+        super(x, y, speed);
         initObstacle();
     }
 
@@ -17,12 +17,13 @@ public class Missile extends Obstacle {
 
     @Override
     public void move() {
-        x -= 5;
+        x -= speed; //x = x-5
 
         // Destroy when going out of the border.
         if (x < 1) {
             isVisible = false;
         }
+
     }
 
     @Override
