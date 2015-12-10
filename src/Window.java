@@ -153,17 +153,18 @@ public class Window extends JPanel implements ActionListener {
         firingWheels = new Thread() {
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        sleep(10000);
-                        // Play rocket shooting sound.
-                        rocketSound();
-                        // Fire missile
-                        Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 2);
-                        missiles.add((Missile) missile);
-                    } catch (Exception e) {
-                        System.out.println(e);
+                try {
+                    sleep(1000);
+                    while (true) {
+                            sleep(10000);
+                            // Play rocket shooting sound.
+                            rocketSound();
+                            // Fire missile
+                            Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 2);
+                            missiles.add((Missile) missile);
                     }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
         };
@@ -198,15 +199,16 @@ public class Window extends JPanel implements ActionListener {
         firingMissiles = new Thread() {
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        // Spawn wheel
-                        Obstacle wheel = factory.getObstacle("wheel", 1024, new Random().nextInt(610) + 10);
-                        wheels.add((Spikes) wheel);
-                        sleep(1000);
-                    } catch (Exception e) {
-                        System.out.println(e);
+                try {
+                    sleep(1000);
+                    while (true) {
+                            // Spawn wheel
+                            Obstacle wheel = factory.getObstacle("wheel", 1024, new Random().nextInt(610) + 10);
+                            wheels.add((Spikes) wheel);
+                            sleep(1000);
                     }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
         };
