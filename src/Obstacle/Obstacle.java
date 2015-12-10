@@ -10,10 +10,11 @@ public abstract class Obstacle {
     protected int height;
     protected boolean isVisible;
     protected Image image;
-
-    public Obstacle(int x, int y) {
+    protected int speed;
+    public Obstacle(int x, int y, int speed) {
         this.x = x;
         this.y = y;
+        this.speed = speed;
         isVisible = true;
     }
 

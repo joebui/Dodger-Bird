@@ -20,9 +20,14 @@ public class Window extends JPanel implements ActionListener {
     private Thread firingMissiles;
     private ObstacleFactory factory;
     private GameTimer gameTimer;
-
+    private int pastMin;
+    private int spikeSpeed;
+    private int missleSpeed;
     public Window() {
         // keyboard listener.
+        pastMin = 0;
+        spikeSpeed = 3;
+        missleSpeed = 5;
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -96,6 +101,11 @@ public class Window extends JPanel implements ActionListener {
         updateBird();
         updateWheel();
         checkCollision();
+        if (gameTimer.getMinute() > pastMin) {
+            spikeSpeed += 1;
+            missleSpeed += 1;
+            pastMin = gameTimer.getMinute();
+        }
 
         repaint();
     }
@@ -114,7 +124,6 @@ public class Window extends JPanel implements ActionListener {
     private void updateWheel() {
         for (int i = 0; i < wheels.size(); i++) {
             Spikes w = wheels.get(i);
-
             if (w.isVisible()) {
                 w.move();
             } else {
@@ -153,6 +162,7 @@ public class Window extends JPanel implements ActionListener {
         firingWheels = new Thread() {
             @Override
             public void run() {
+<<<<<<< HEAD
                 try {
                     sleep(1000);
                     while (true) {
@@ -162,6 +172,18 @@ public class Window extends JPanel implements ActionListener {
                             // Fire missile
                             Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 2);
                             missiles.add((Missile) missile);
+=======
+                while (true) {
+                    try {
+                        sleep(10000);
+                        // Play rocket shooting sound.
+                        rocketSound();
+                        // Fire missile
+                        Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 2, missleSpeed);
+                        missiles.add((Missile) missile);
+                    } catch (Exception e) {
+                        System.out.println(e);
+>>>>>>> Phuc
                     }
                 } catch (Exception e) {
                     System.out.println(e);
@@ -199,6 +221,7 @@ public class Window extends JPanel implements ActionListener {
         firingMissiles = new Thread() {
             @Override
             public void run() {
+<<<<<<< HEAD
                 try {
                     sleep(1000);
                     while (true) {
@@ -206,6 +229,16 @@ public class Window extends JPanel implements ActionListener {
                             Obstacle wheel = factory.getObstacle("wheel", 1024, new Random().nextInt(610) + 10);
                             wheels.add((Spikes) wheel);
                             sleep(1000);
+=======
+                while (true) {
+                    try {
+                        // Spawn wheel
+                        Obstacle wheel = factory.getObstacle("wheel", 1024, new Random().nextInt(610) + 10, spikeSpeed);
+                        wheels.add((Spikes) wheel);
+                        sleep(1000);
+                    } catch (Exception e) {
+                        System.out.println(e);
+>>>>>>> Phuc
                     }
                 } catch (Exception e) {
                     System.out.println(e);

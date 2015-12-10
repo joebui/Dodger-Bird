@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Spikes extends Obstacle {
-    public Spikes(int x, int y) {
-        super(x, y);
+    public Spikes(int x, int y, int speed) {
+        super(x, y, speed);
         initObstacle();
     }
 
     @Override
     public void move() {
-        x -= 3;
+        x -= speed;
 
         // Destroy when going out of the border.
         if (x < 1) {
