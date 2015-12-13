@@ -44,7 +44,7 @@ public class Bird {
         else
             bird = new ImageIcon("images/bird3.gif").getImage();
 
-        ImageIcon scaled = new ImageIcon(bird.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        ImageIcon scaled = new ImageIcon(bird.getScaledInstance(60, 50, Image.SCALE_SMOOTH));
         image = scaled.getImage();
         getImageDimensions();
     }
