@@ -25,6 +25,8 @@ public class Window extends JPanel implements ActionListener {
     private int pastMin;
     private int spikeSpeed;
     private int missileSpeed;
+    private int x;
+
     public Window() {
         // keyboard listener.
         pastMin = 0;
@@ -69,8 +71,14 @@ public class Window extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        // Add background image.
-        g.drawImage(new ImageIcon("images/background.png").getImage(), 0, 0, 1024, 720, this);
+        // Add scrolling background image.
+        if (x > 1024)
+            x = 0;
+
+        g.drawImage(new ImageIcon("images/background.png").getImage(), x, 0, 1024, 720, this);
+        g.drawImage(new ImageIcon("images/background.png").getImage(), x - 1024, 0, 1024, 720, this);
+        x++;
+
         if (bird.isVisible()) {
             // Display timer on screen.
             g.setFont(new Font("Times New Roman", Font.BOLD, 20));
