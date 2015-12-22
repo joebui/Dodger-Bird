@@ -32,6 +32,7 @@ public class Window extends JPanel implements ActionListener {
         pastMin = 0;
         spikeSpeed = 3;
         missileSpeed = 5;
+        x = 1024;
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -59,7 +60,7 @@ public class Window extends JPanel implements ActionListener {
         factory = new ObstacleFactory();
         gameTimer = new GameTimer(bird);
         fireMissile();
-//        fireSpike();
+        fireSpike();
         fireFlame();
         Timer timer = new Timer(10, this);
         timer.start();
@@ -72,12 +73,12 @@ public class Window extends JPanel implements ActionListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         // Add scrolling background image.
-        if (x > 1024)
-            x = 0;
+        if (x < 0)
+            x = 1024;
 
-        g.drawImage(new ImageIcon("images/background.png").getImage(), x, 0, 1024, 720, this);
         g.drawImage(new ImageIcon("images/background.png").getImage(), x - 1024, 0, 1024, 720, this);
-        x++;
+        g.drawImage(new ImageIcon("images/background.png").getImage(), x, 0, 1024, 720, this);
+        x--;
 
         if (bird.isVisible()) {
             // Display timer on screen.
@@ -96,9 +97,9 @@ public class Window extends JPanel implements ActionListener {
                 g2d.drawImage(m.getImage(), m.getX(), m.getY(), this);
             }
 
-//            for (Spikes w : spikes) {
-//                g2d.drawImage(w.getImage(), w.getX(), w.getY(), this);
-//            }
+            for (Spikes w : spikes) {
+                g2d.drawImage(w.getImage(), w.getX(), w.getY(), this);
+            }
 
             for (Flame f : flames) {
                 g2d.drawImage(f.getImage(), f.getX(), f.getY(), this);
@@ -114,7 +115,7 @@ public class Window extends JPanel implements ActionListener {
         if (bird.isVisible()) {
             updateMissiles();
             updateBird();
-//            updateSpike();
+            updateSpike();
             updateFlame();
             checkCollision();
         }
@@ -253,7 +254,7 @@ public class Window extends JPanel implements ActionListener {
                     sleep(1000);
                     while (true) {
                             // Spawn wheel
-                        Obstacle wheel = factory.getObstacle("flame", 1000, new Random().nextInt(610) + 10, spikeSpeed);
+                        Obstacle wheel = factory.getObstacle("spike", 1000, new Random().nextInt(610) + 10, spikeSpeed);
                         spikes.add((Spikes) wheel);
                         sleep(1000);
                     }
@@ -293,7 +294,7 @@ public class Window extends JPanel implements ActionListener {
         spikes.clear();
         flames.clear();
         firingMissiles.stop();
-//        firingSpikes.stop();
+        firingSpikes.stop();
         firingFlames.stop();
     }
 }
