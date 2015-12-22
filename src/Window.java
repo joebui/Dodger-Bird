@@ -26,7 +26,7 @@ public class Window extends JPanel implements ActionListener {
     private int spikeSpeed;
     private int missileSpeed;
     private int x;
-
+    
     public Window() {
         // keyboard listener.
         pastMin = 0;
