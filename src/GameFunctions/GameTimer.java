@@ -54,4 +54,12 @@ public class GameTimer extends Observer {
             timerThread.stop();
         }
     }
+
+    public void pause() {
+        timerThread.suspend();
+    }
+
+    public void resume() {
+        timerThread.resume();
+    }
 }

@@ -26,6 +26,7 @@ public class Window extends JPanel implements ActionListener {
     private int spikeSpeed;
     private int missileSpeed;
     private int x;
+    private boolean isPause;
     
     public Window() {
         // keyboard listener.
@@ -40,6 +41,17 @@ public class Window extends JPanel implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 bird.keyPressed(e);
+
+                int key = e.getExtendedKeyCode();
+                // Pause game.
+                if (key == KeyEvent.VK_ESCAPE) {
+                    pause();
+                }
+
+                // Resume game.
+                if (key == KeyEvent.VK_R) {
+                    resume();
+                }
             }
 
             @Override
@@ -112,7 +124,7 @@ public class Window extends JPanel implements ActionListener {
     // This method will be called recursively to update the object.
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (bird.isVisible()) {
+        if (bird.isVisible() && !isPause) {
             updateMissiles();
             updateBird();
             updateSpike();
@@ -296,5 +308,21 @@ public class Window extends JPanel implements ActionListener {
         firingMissiles.stop();
         firingSpikes.stop();
         firingFlames.stop();
+    }
+
+    private void pause() {
+        isPause = true;
+        firingMissiles.suspend();
+        firingSpikes.suspend();
+        firingFlames.suspend();
+        gameTimer.pause();
+    }
+
+    private void resume() {
+        isPause = false;
+        firingMissiles.resume();
+        firingSpikes.resume();
+        firingFlames.resume();
+        gameTimer.resume();
     }
 }
