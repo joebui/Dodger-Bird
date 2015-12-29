@@ -39,6 +39,8 @@ public class GameTimer extends Observer {
         return second;
     }
 
+    public int getTime() { return time; }
+
     private void increaseTime() {
         time++;
         // Get the minute part.

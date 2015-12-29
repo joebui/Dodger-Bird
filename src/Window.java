@@ -40,21 +40,25 @@ public class Window extends JPanel implements ActionListener {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                bird.keyPressed(e);
+                if (!isPause)
+                    bird.keyPressed(e);
 
                 int key = e.getExtendedKeyCode();
                 // Pause game.
                 if (key == KeyEvent.VK_ESCAPE) {
-                    if (!isPause)
+                    if (!isPause) {
                         pause();
-                    else
+                        JOptionPane.showMessageDialog(null, "Game is paused. Press Enter then Esc to resume");
+                    } else {
                         resume();
+                    }
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                bird.keyReleased(e);
+                if (!isPause)
+                    bird.keyReleased(e);
             }
         });
 
@@ -216,14 +220,16 @@ public class Window extends JPanel implements ActionListener {
             @Override
             public void run() {
                 try {
-                    sleep(1000);
                     while (true) {
-                        sleep(10000);
-                        // Play rocket shooting sound.
-                        rocketSound();
-                        // Fire missile
-                        Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 8, missileSpeed);
-                        missiles.add((Missile) missile);
+                        sleep(1);
+                        if (!isPause && gameTimer.getTime() % 10 == 0 && gameTimer.getTime() != 0) {
+                            // Play rocket shooting sound.
+                            rocketSound();
+                            // Fire missile
+                            Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 8, missileSpeed);
+                            missiles.add((Missile) missile);
+                            sleep(1000);
+                        }
                     }
                 } catch (Exception e) {
                     System.out.println(e);
@@ -264,9 +270,11 @@ public class Window extends JPanel implements ActionListener {
                 try {
                     sleep(1000);
                     while (true) {
-                            // Spawn wheel
-                        Obstacle wheel = factory.getObstacle("spike", 1000, new Random().nextInt(610) + 10, spikeSpeed);
-                        spikes.add((Spikes) wheel);
+                        // Spawn spike
+                        if (!isPause) {
+                            Obstacle wheel = factory.getObstacle("spike", 1000, new Random().nextInt(610) + 10, spikeSpeed);
+                            spikes.add((Spikes) wheel);
+                        }
                         sleep(1000);
                     }
                 } catch (Exception e) {
@@ -285,9 +293,11 @@ public class Window extends JPanel implements ActionListener {
                 try {
                     sleep(1000);
                     while (true) {
-                        // Spawn wheel
-                        Obstacle flame = factory.getObstacle("flame", 1000, bird.getY() + bird.getHeight() / 8, spikeSpeed);
-                        flames.add((Flame) flame);
+                        // Spawn flame
+                        if (!isPause) {
+                            Obstacle flame = factory.getObstacle("flame", 1000, bird.getY() + bird.getHeight() / 8, spikeSpeed);
+                            flames.add((Flame) flame);
+                        }
                         sleep(1000);
                     }
                 } catch (Exception e) {
@@ -311,17 +321,17 @@ public class Window extends JPanel implements ActionListener {
 
     private void pause() {
         isPause = true;
-        firingMissiles.suspend();
-        firingSpikes.suspend();
-        firingFlames.suspend();
+//        firingMissiles.suspend();
+//        firingSpikes.suspend();
+//        firingFlames.suspend();
         gameTimer.pause();
     }
 
     private void resume() {
         isPause = false;
-        firingMissiles.resume();
-        firingSpikes.resume();
-        firingFlames.resume();
+//        firingMissiles.resume();
+//        firingSpikes.resume();
+//        firingFlames.resume();
         gameTimer.resume();
     }
 }
