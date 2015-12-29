@@ -45,12 +45,10 @@ public class Window extends JPanel implements ActionListener {
                 int key = e.getExtendedKeyCode();
                 // Pause game.
                 if (key == KeyEvent.VK_ESCAPE) {
-                    pause();
-                }
-
-                // Resume game.
-                if (key == KeyEvent.VK_R) {
-                    resume();
+                    if (!isPause)
+                        pause();
+                    else
+                        resume();
                 }
             }
 
@@ -90,7 +88,8 @@ public class Window extends JPanel implements ActionListener {
 
         g.drawImage(new ImageIcon("images/background.png").getImage(), x - 1024, 0, 1024, 720, this);
         g.drawImage(new ImageIcon("images/background.png").getImage(), x, 0, 1024, 720, this);
-        x--;
+        if (!isPause)
+            x--;
 
         if (bird.isVisible()) {
             // Display timer on screen.
