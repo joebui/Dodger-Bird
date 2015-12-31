@@ -34,6 +34,7 @@ public class Window extends JPanel implements ActionListener {
         spikeSpeed = 3;
         missileSpeed = 5;
         x = 1024;
+
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -62,9 +63,7 @@ public class Window extends JPanel implements ActionListener {
             }
         });
 
-        setFocusable(true);
         setBackground(Color.BLACK);
-        setDoubleBuffered(true);
 
         // Get the only available Bird object.
         bird = Bird.getInstance();
