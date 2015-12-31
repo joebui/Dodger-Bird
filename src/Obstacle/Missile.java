@@ -23,7 +23,6 @@ public class Missile extends Obstacle {
         if (x < 1) {
             isVisible = false;
         }
-
     }
 
     @Override

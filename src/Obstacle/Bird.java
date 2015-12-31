@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 // Apply Singleton pattern to Bird class.
 public class Bird {
@@ -32,8 +33,18 @@ public class Bird {
     }
 
     public void initObstacle() {
-        Image bird = new ImageIcon("images/Bird.gif").getImage();
-        ImageIcon scaled = new ImageIcon(bird.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        Image bird;
+        Random r = new Random();
+        int ranNum = r.nextInt(3);
+
+        if (ranNum == 0)
+            bird = new ImageIcon("images/bird1.gif").getImage();
+        else if (ranNum == 1)
+            bird = new ImageIcon("images/bird2.gif").getImage();
+        else
+            bird = new ImageIcon("images/bird3.gif").getImage();
+
+        ImageIcon scaled = new ImageIcon(bird.getScaledInstance(60, 50, Image.SCALE_SMOOTH));
         image = scaled.getImage();
         getImageDimensions();
     }

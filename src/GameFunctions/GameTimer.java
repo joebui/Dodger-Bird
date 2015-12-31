@@ -39,6 +39,8 @@ public class GameTimer extends Observer {
         return second;
     }
 
+    public int getTime() { return time; }
+
     private void increaseTime() {
         time++;
         // Get the minute part.
@@ -53,5 +55,13 @@ public class GameTimer extends Observer {
             // Stop the stop watch.
             timerThread.stop();
         }
+    }
+
+    public void pause() {
+        timerThread.suspend();
+    }
+
+    public void resume() {
+        timerThread.resume();
     }
 }

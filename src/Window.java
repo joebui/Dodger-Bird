@@ -15,46 +15,66 @@ import javax.swing.*;
 public class Window extends JPanel implements ActionListener {
     private Bird bird;
     private ArrayList<Missile> missiles;
-    private ArrayList<Spikes> wheels;
-    private Thread firingWheels;
+    private ArrayList<Spikes> spikes;
+    private ArrayList<Flame> flames;
+    private Thread firingSpikes;
     private Thread firingMissiles;
+    private Thread firingFlames;
     private ObstacleFactory factory;
     private GameTimer gameTimer;
     private int pastMin;
     private int spikeSpeed;
-    private int missleSpeed;
+    private int missileSpeed;
+    private int x;
+    private boolean isPause;
+    
     public Window() {
         // keyboard listener.
         pastMin = 0;
         spikeSpeed = 3;
-        missleSpeed = 5;
+        missileSpeed = 5;
+        x = 1024;
+
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
 
             @Override
             public void keyPressed(KeyEvent e) {
-                bird.keyPressed(e);
+                if (!isPause)
+                    bird.keyPressed(e);
+
+                int key = e.getExtendedKeyCode();
+                // Pause game.
+                if (key == KeyEvent.VK_ESCAPE) {
+                    if (!isPause) {
+                        pause();
+                        JOptionPane.showMessageDialog(null, "Game is paused. Press Enter then Esc to resume");
+                    } else {
+                        resume();
+                    }
+                }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                bird.keyReleased(e);
+                if (!isPause)
+                    bird.keyReleased(e);
             }
         });
 
-        setFocusable(true);
         setBackground(Color.BLACK);
-        setDoubleBuffered(true);
 
         // Get the only available Bird object.
         bird = Bird.getInstance();
         missiles = new ArrayList<>();
-        wheels = new ArrayList<>();
+        spikes = new ArrayList<>();
+        flames = new ArrayList<>();
         factory = new ObstacleFactory();
         gameTimer = new GameTimer(bird);
         fireMissile();
-        fireWheel();
+        fireSpike();
+        fireFlame();
         Timer timer = new Timer(10, this);
         timer.start();
         music();
@@ -64,10 +84,18 @@ public class Window extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Add background image.
-        g.drawImage(new ImageIcon("images/background.png").getImage(), 0, 0, 1024, 720, this);
-        // Display timer on screen.
+        Graphics2D g2d = (Graphics2D) g;
+        // Add scrolling background image.
+        if (x < 0)
+            x = 1024;
+
+        g.drawImage(new ImageIcon("images/background.png").getImage(), x - 1024, 0, 1024, 720, this);
+        g.drawImage(new ImageIcon("images/background.png").getImage(), x, 0, 1024, 720, this);
+        if (!isPause)
+            x--;
+
         if (bird.isVisible()) {
+            // Display timer on screen.
             g.setFont(new Font("Times New Roman", Font.BOLD, 20));
             StringBuilder builder = new StringBuilder();
             builder.append("Time - ");
@@ -75,19 +103,20 @@ public class Window extends JPanel implements ActionListener {
             builder.append(":");
             builder.append(gameTimer.getSecond());
             g.drawString(String.valueOf(builder.toString()), 460, 20);
-        }
 
-        Graphics2D g2d = (Graphics2D) g;
-
-        if (bird.isVisible()) {
+            // Display obstacles and bird.
             g2d.drawImage(bird.getImage(), bird.getX(), bird.getY(), this);
 
             for (Missile m : missiles) {
                 g2d.drawImage(m.getImage(), m.getX(), m.getY(), this);
             }
 
-            for (Spikes w : wheels) {
+            for (Spikes w : spikes) {
                 g2d.drawImage(w.getImage(), w.getX(), w.getY(), this);
+            }
+
+            for (Flame f : flames) {
+                g2d.drawImage(f.getImage(), f.getX(), f.getY(), this);
             }
         }
 
@@ -97,13 +126,17 @@ public class Window extends JPanel implements ActionListener {
     // This method will be called recursively to update the object.
     @Override
     public void actionPerformed(ActionEvent e) {
-        updateMissiles();
-        updateBird();
-        updateWheel();
-        checkCollision();
+        if (bird.isVisible() && !isPause) {
+            updateMissiles();
+            updateBird();
+            updateSpike();
+            updateFlame();
+            checkCollision();
+        }
+
         if (gameTimer.getMinute() > pastMin) {
             spikeSpeed += 1;
-            missleSpeed += 1;
+            missileSpeed += 1;
             pastMin = gameTimer.getMinute();
         }
 
@@ -121,13 +154,24 @@ public class Window extends JPanel implements ActionListener {
         }
     }
 
-    private void updateWheel() {
-        for (int i = 0; i < wheels.size(); i++) {
-            Spikes w = wheels.get(i);
+    private void updateSpike() {
+        for (int i = 0; i < spikes.size(); i++) {
+            Spikes w = spikes.get(i);
             if (w.isVisible()) {
                 w.move();
             } else {
-                wheels.remove(i);
+                spikes.remove(i);
+            }
+        }
+    }
+
+    private void updateFlame() {
+        for (int i = 0; i < flames.size(); i++) {
+            Flame w = flames.get(i);
+            if (w.isVisible()) {
+                w.move();
+            } else {
+                flames.remove(i);
             }
         }
     }
@@ -145,39 +189,54 @@ public class Window extends JPanel implements ActionListener {
                 // Make bird disappear and notify other objects in game.
                 bird.setVisible(false);
                 stopSpawning();
+                break;
             }
         }
 
-        for (Spikes w : wheels) {
+        for (Spikes w : spikes) {
             Rectangle wr = w.getBound();
             if (birdBound.intersects(wr)) {
                 // Make bird disappear and notify other objects in game.
                 bird.setVisible(false);
                 stopSpawning();
+                break;
+            }
+        }
+
+        for (Flame f : flames) {
+            Rectangle fr = f.getBound();
+            if (birdBound.intersects(fr)) {
+                // Make bird disappear and notify other objects in game.
+                bird.setVisible(false);
+                stopSpawning();
+                break;
             }
         }
     }
 
     private void fireMissile() {
-        firingWheels = new Thread() {
+        firingMissiles = new Thread() {
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        sleep(10000);
-                        // Play rocket shooting sound.
-                        rocketSound();
-                        // Fire missile
-                        Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 2, missleSpeed);
-                        missiles.add((Missile) missile);
-                    } catch (Exception e) {
-                        System.out.println(e);
+                try {
+                    while (true) {
+                        sleep(1);
+                        if (!isPause && gameTimer.getTime() % 10 == 0 && gameTimer.getTime() != 0) {
+                            // Play rocket shooting sound.
+                            rocketSound();
+                            // Fire missile
+                            Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 8, missileSpeed);
+                            missiles.add((Missile) missile);
+                            sleep(1000);
+                        }
                     }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
         };
 
-        firingWheels.start();
+        firingMissiles.start();
     }
 
     private synchronized void rocketSound() {
@@ -203,29 +262,75 @@ public class Window extends JPanel implements ActionListener {
         }
     }
 
-    private void fireWheel() {
-        firingMissiles = new Thread() {
+    private void fireSpike() {
+        firingSpikes = new Thread() {
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        // Spawn wheel
-                        Obstacle wheel = factory.getObstacle("wheel", 1024, new Random().nextInt(610) + 10, spikeSpeed);
-                        wheels.add((Spikes) wheel);
+                try {
+                    sleep(1000);
+                    while (true) {
+                        // Spawn spike
+                        if (!isPause) {
+                            Obstacle wheel = factory.getObstacle("spike", 1000, new Random().nextInt(610) + 10, spikeSpeed);
+                            spikes.add((Spikes) wheel);
+                        }
                         sleep(1000);
-                    } catch (Exception e) {
-                        System.out.println(e);
                     }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
         };
 
-        firingMissiles.start();
+        firingSpikes.start();
+    }
+
+    private void fireFlame() {
+        firingFlames = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    sleep(1000);
+                    while (true) {
+                        // Spawn flame
+                        if (!isPause) {
+                            Obstacle flame = factory.getObstacle("flame", 1000, bird.getY() + bird.getHeight() / 8, spikeSpeed);
+                            flames.add((Flame) flame);
+                        }
+                        sleep(1000);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        };
+
+        firingFlames.start();
     }
 
     private void stopSpawning() {
         // Stop the thread firing missiles and spawning wheels.
+        missiles.clear();
+        spikes.clear();
+        flames.clear();
         firingMissiles.stop();
-        firingWheels.stop();
+        firingSpikes.stop();
+        firingFlames.stop();
+    }
+
+    private void pause() {
+        isPause = true;
+//        firingMissiles.suspend();
+//        firingSpikes.suspend();
+//        firingFlames.suspend();
+        gameTimer.pause();
+    }
+
+    private void resume() {
+        isPause = false;
+//        firingMissiles.resume();
+//        firingSpikes.resume();
+//        firingFlames.resume();
+        gameTimer.resume();
     }
 }

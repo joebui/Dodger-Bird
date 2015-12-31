@@ -14,13 +14,14 @@ public class Spikes extends Obstacle {
         x -= speed;
 
         // Destroy when going out of the border.
-        if (x < 1) {
+        if (x < 0) {
             isVisible = false;
         }
     }
 
     @Override
     public void initObstacle() {
+        // Create flame sprite.
         loadImage("images/wallOfSpikes.gif");
         getImageDimensions();
     }

@@ -7,8 +7,10 @@ public class ObstacleFactory {
         if (type.equalsIgnoreCase("missile")) {
             return new Missile(x, y, speed);
         // Get wheel object.
-        } else if (type.equalsIgnoreCase("wheel")) {
+        } else if (type.equalsIgnoreCase("spike")) {
             return new Spikes(x, y, speed);
+        } else if (type.equalsIgnoreCase("flame")) {
+            return new Flame(x, y, speed);
         } else {
             return null;
         }
