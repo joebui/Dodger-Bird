@@ -113,12 +113,12 @@ public class Bird {
 
         // Go up.
         if (key == KeyEvent.VK_UP) {
-            speed = -2;
+            speed = -4;
         }
 
         // Go down.
         if (key == KeyEvent.VK_DOWN) {
-            speed = 2;
+            speed = 4;
         }
     }
 
