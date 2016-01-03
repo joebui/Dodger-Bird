@@ -22,7 +22,7 @@ public class Window extends JPanel implements ActionListener {
     private Thread firingFlames;
     private ObstacleFactory factory;
     private GameTimer gameTimer;
-    private int pastMin;
+    private int pastSecond;
     private int spikeSpeed;
     private int missileSpeed;
     private int x;
@@ -30,7 +30,7 @@ public class Window extends JPanel implements ActionListener {
     
     public Window() {
         // keyboard listener.
-        pastMin = 0;
+        pastSecond = 30;
         spikeSpeed = 3;
         missileSpeed = 5;
         x = 1024;
@@ -134,10 +134,10 @@ public class Window extends JPanel implements ActionListener {
             checkCollision();
         }
 
-        if (gameTimer.getMinute() > pastMin) {
+        if (gameTimer.getCountSecond() > pastSecond) {
             spikeSpeed += 1;
             missileSpeed += 1;
-            pastMin = gameTimer.getMinute();
+            pastSecond += 30;
         }
 
         repaint();
@@ -274,7 +274,7 @@ public class Window extends JPanel implements ActionListener {
                             Obstacle wheel = factory.getObstacle("spike", 1000, new Random().nextInt(610) + 10, spikeSpeed);
                             spikes.add((Spikes) wheel);
                         }
-                        sleep(1000);
+                        sleep(2000);
                     }
                 } catch (Exception e) {
                     System.out.println(e);
@@ -290,14 +290,14 @@ public class Window extends JPanel implements ActionListener {
             @Override
             public void run() {
                 try {
-                    sleep(1000);
+                    sleep(1500);
                     while (true) {
                         // Spawn flame
                         if (!isPause) {
                             Obstacle flame = factory.getObstacle("flame", 1000, bird.getY() + bird.getHeight() / 8, spikeSpeed);
                             flames.add((Flame) flame);
                         }
-                        sleep(1000);
+                        sleep(2000);
                     }
                 } catch (Exception e) {
                     System.out.println(e);
