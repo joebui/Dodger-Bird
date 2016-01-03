@@ -7,7 +7,7 @@ public class Game extends JFrame {
         menu = new Menu(this);
         add(menu);
 
-        setSize(500, 430);
+        setSize(1024, 720);
         setResizable(false);
 
         setTitle("Dodger Bird");
