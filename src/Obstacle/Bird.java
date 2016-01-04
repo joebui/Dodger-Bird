@@ -18,15 +18,15 @@ public class Bird {
     private ArrayList<Observer> observer = new ArrayList<>();
 
     // Bird class won't be instantiated.
-    private Bird(int x, int y) {
-        this.x = x;
-        this.y = y;
+    private Bird() {
+        x = 40;
+        y = 60;
         isVisible = true;
         initObstacle();
     }
 
     // Instantiate the only Bird object.
-    private static Bird instance = new Bird(40, 60);
+    private static Bird instance = new Bird();
 
     public static Bird getInstance() {
         return instance;
@@ -84,7 +84,8 @@ public class Bird {
     public void setVisible(boolean visible) {
         this.isVisible = visible;
         // Notify other object about the new status.
-        notifyAllObserver();
+        if (!visible)
+            notifyAllObserver();
     }
 
     public int getHeight() {

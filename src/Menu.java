@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
@@ -59,15 +56,14 @@ public class Menu extends JPanel {
         add(main);
 
         play.addActionListener(e1 -> g.openGame());
-        howto.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                JOptionPane.showMessageDialog(null, "Use the up and down arrow keys to play \n" +
-                        "Try to avoid obstacle \n" +
-                        "Becareful of Missles!","How to play Dodger Bird",JOptionPane.PLAIN_MESSAGE);
-            }
-        });
+        howto.addActionListener(arg0 ->
+                JOptionPane.showMessageDialog(null, "Use the UP and DOWN arrow keys to move the bird.\n" +
+                "Try to avoid obstacle and be aware of missiles. You only have 1 life.\n\n" +
+                "The game will be endless until you die.", "How to play Dodger Bird",
+                JOptionPane.INFORMATION_MESSAGE));
 
-        exit.addActionListener(e4 -> g.dispose());
+        exit.addActionListener(e4 -> System.exit(0));
+        setFocusable(true);
     }
     @Override
     public void paintComponent(Graphics g) {

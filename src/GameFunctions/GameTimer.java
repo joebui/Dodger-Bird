@@ -40,6 +40,7 @@ public class GameTimer extends Observer {
     public int getCountSecond() {
         return countSecond;
     }
+
     public int getSecond() {
         return second;
     }
@@ -56,10 +57,8 @@ public class GameTimer extends Observer {
 
     @Override
     public void update() {
-        if (!this.bird.isVisible()) {
-            // Stop the stop watch.
-            timerThread.stop();
-        }
+        // Stop the stop watch.
+        timerThread.stop();
     }
 
     public void pause() {
@@ -68,5 +67,9 @@ public class GameTimer extends Observer {
 
     public void resume() {
         timerThread.resume();
+    }
+
+    public void gameOver() {
+
     }
 }
