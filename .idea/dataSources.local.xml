@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Sqlite (Xerial) - achievement.db" uuid="c7619e4f-1c81-4ab7-bf67-6d157ed27ed0">
+      <secret-storage>master_key</secret-storage>
+      <auth-required>false</auth-required>
+    </data-source>
+  </component>
+</project>

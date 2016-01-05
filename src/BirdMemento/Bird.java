@@ -1,4 +1,6 @@
-package Obstacle;
+package BirdMemento;
+
+import Obstacle.Observer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +24,6 @@ public class Bird {
         x = 40;
         y = 60;
         isVisible = true;
-        initObstacle();
     }
 
     // Instantiate the only Bird object.
@@ -102,9 +103,18 @@ public class Bird {
 
     public void notifyAllObserver() {
         // Update the connected objects.
-        for (Observer o : observer) {
-            o.update();
-        }
+        observer.forEach(Observer::update);
+    }
+
+    public Memento saveToMemento() {
+        return new Memento(x, y, speed, isVisible);
+    }
+
+    public void getFromMemento(Memento memento) {
+        x = memento.getX();
+        y = memento.getY();
+        speed = memento.getSpeed();
+        isVisible = memento.isVisible();
     }
 
     // Accept user's input.
@@ -114,12 +124,12 @@ public class Bird {
 
         // Go up.
         if (key == KeyEvent.VK_UP) {
-            speed = -4;
+            speed = -3;
         }
 
         // Go down.
         if (key == KeyEvent.VK_DOWN) {
-            speed = 4;
+            speed = 3;
         }
     }
 

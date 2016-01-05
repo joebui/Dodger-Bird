@@ -1,6 +1,6 @@
 package GameFunctions;
 
-import Obstacle.Bird;
+import BirdMemento.Bird;
 import Obstacle.Observer;
 
 public class GameTimer extends Observer {

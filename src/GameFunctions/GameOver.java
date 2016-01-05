@@ -2,24 +2,35 @@ package GameFunctions;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Statement;
 
 public class GameOver extends JPanel {
-    private JLabel title, time;
     private JButton back;
-    private int m, s;
+    private int t;
 
-    public GameOver() {
-        title = new JLabel("GAME OVER");
-        time = new JLabel("Time: " + m + ":" + s);
+    public GameOver(Game game) {
         back = new JButton("Back to menu");
+        back.addActionListener(e -> game.openMainMenu());
+    }
+
+    public void updateTime(int time) {
+        t = time;
+    }
+
+    public void displayTime() {
+        JLabel title = new JLabel("GAME OVER");
+        JLabel time = new JLabel();
 
         JPanel p1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 45, 45));
         title.setFont(new Font("Magneto", Font.BOLD, 40));
+        title.setForeground(Color.WHITE);
         p1.add(title);
         p1.setBackground(Color.BLACK);
 
         JPanel p2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 45, 45));
-        time.setFont(new Font("Magneto", Font.BOLD, 40));
+        time.setText("Time: " + t / 60 + ":" + t % 60);
+        time.setFont(new Font("Arial", Font.BOLD, 40));
+        time.setForeground(Color.WHITE);
         p2.add(time);
         p2.setBackground(Color.BLACK);
 
@@ -34,8 +45,11 @@ public class GameOver extends JPanel {
         add(p1); add(p2); add(p3);
     }
 
-    public void updateTime(int m, int s) {
-        this.m = m;
-        this.s = s;
+    public String askPlayerName() {
+        return JOptionPane.showInputDialog("Enter your name", "player");
+    }
+
+    public int getTime() {
+        return t;
     }
 }

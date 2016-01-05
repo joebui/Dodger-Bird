@@ -1,4 +1,6 @@
-import GameFunctions.*;
+package GameFunctions;
+
+import BirdMemento.Bird;
 import Obstacle.*;
 
 import java.awt.*;
@@ -22,6 +24,7 @@ public class GameScreen extends JPanel implements ActionListener {
     private ObstacleFactory factory;
     private GameTimer gameTimer;
     private GameOver gameOver;
+    private Timer timer;
     private int pastSecond;
     private int spikeSpeed;
     private int missileSpeed;
@@ -76,9 +79,8 @@ public class GameScreen extends JPanel implements ActionListener {
         fireMissile();
         fireSpike();
         fireFlame();
-        Timer timer = new Timer(10, this);
+        timer = new Timer(10, this);
         timer.start();
-        music();
     }
 
     // Display the objects on screen.
@@ -103,6 +105,7 @@ public class GameScreen extends JPanel implements ActionListener {
             builder.append(gameTimer.getMinute());
             builder.append(":");
             builder.append(gameTimer.getSecond());
+            gameOver.updateTime(gameTimer.getTime());
             g.drawString(String.valueOf(builder.toString()), 460, 20);
 
             // Display obstacles and bird.
@@ -136,10 +139,8 @@ public class GameScreen extends JPanel implements ActionListener {
             updateSpike();
             updateFlame();
             checkCollision();
-
-            gameOver.updateTime(gameTimer.getMinute(), gameTimer.getSecond());
-        } else {
-
+        } else if (!bird.isVisible()) {
+            timer.stop();
         }
 
         if (gameTimer.getCountSecond() > pastSecond) {
@@ -195,8 +196,8 @@ public class GameScreen extends JPanel implements ActionListener {
             Rectangle mr = m.getBound();
             if (birdBound.intersects(mr)) {
                 // Make bird disappear and notify other objects in game.
-                bird.setVisible(false);
                 stopSpawning();
+                bird.setVisible(false);
                 break;
             }
         }
@@ -205,8 +206,8 @@ public class GameScreen extends JPanel implements ActionListener {
             Rectangle wr = w.getBound();
             if (birdBound.intersects(wr)) {
                 // Make bird disappear and notify other objects in game.
-                bird.setVisible(false);
                 stopSpawning();
+                bird.setVisible(false);
                 break;
             }
         }
@@ -215,8 +216,8 @@ public class GameScreen extends JPanel implements ActionListener {
             Rectangle fr = f.getBound();
             if (birdBound.intersects(fr)) {
                 // Make bird disappear and notify other objects in game.
-                bird.setVisible(false);
                 stopSpawning();
+                bird.setVisible(false);
                 break;
             }
         }
@@ -231,7 +232,7 @@ public class GameScreen extends JPanel implements ActionListener {
                         sleep(1);
                         if (!isPause && gameTimer.getTime() % 10 == 0 && gameTimer.getTime() != 0) {
                             // Play rocket shooting sound.
-                            rocketSound();
+                            generateSound("RocketShoot.wav");
                             // Fire missile
                             Obstacle missile = factory.getObstacle("missile", 1024, bird.getY() + bird.getHeight() / 8, missileSpeed);
                             missiles.add((Missile) missile);
@@ -247,26 +248,14 @@ public class GameScreen extends JPanel implements ActionListener {
         firingMissiles.start();
     }
 
-    private synchronized void rocketSound() {
+    private synchronized void generateSound(String file) {
         try {
             Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/RocketShoot.wav"));
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/" + file));
             clip.open(inputStream);
             clip.start();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-    }
-
-    private synchronized void music() {
-        try {
-            Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/BackgroundMusic.wav"));
-            clip.open(inputStream);
-            // Play background music endlessly.
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch(Exception error)  {
-            System.out.println(error.getMessage());
         }
     }
 
@@ -317,6 +306,7 @@ public class GameScreen extends JPanel implements ActionListener {
     }
 
     private void stopSpawning() {
+        System.out.println("fsadfasd");
         // Stop the thread firing missiles and spawning wheels.
         missiles.clear();
         spikes.clear();

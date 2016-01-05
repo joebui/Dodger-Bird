@@ -1,3 +1,5 @@
+import GameFunctions.Game;
+
 import java.awt.*;
 
 public class Main {

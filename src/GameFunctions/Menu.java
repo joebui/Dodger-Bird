@@ -1,5 +1,9 @@
+package GameFunctions;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 
@@ -62,9 +66,11 @@ public class Menu extends JPanel {
                 "The game will be endless until you die.", "How to play Dodger Bird",
                 JOptionPane.INFORMATION_MESSAGE));
 
+        highScores.addActionListener(e1 -> g.openHighScores());
         exit.addActionListener(e4 -> System.exit(0));
         setFocusable(true);
     }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
