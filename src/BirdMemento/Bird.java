@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-// Apply Singleton pattern to Bird class.
 public class Bird {
     private int x;
     private int y;
@@ -19,7 +18,7 @@ public class Bird {
     private int speed;
     private ArrayList<Observer> observer = new ArrayList<>();
 
-    // Bird class won't be instantiated.
+    // Bird class can't be instantiated outside.
     private Bird() {
         x = 40;
         y = 60;
@@ -38,6 +37,7 @@ public class Bird {
         Random r = new Random();
         int ranNum = r.nextInt(3);
 
+        // Assign a random bird image.
         if (ranNum == 0)
             bird = new ImageIcon("images/bird1.gif").getImage();
         else if (ranNum == 1)

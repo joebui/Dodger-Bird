@@ -59,14 +59,17 @@ public class Menu extends JPanel {
         main.add(e);
         add(main);
 
+        // Play game
         play.addActionListener(e1 -> g.openGame());
+        // Show how-to window.
         howto.addActionListener(arg0 ->
                 JOptionPane.showMessageDialog(null, "Use the UP and DOWN arrow keys to move the bird.\n" +
                 "Try to avoid obstacle and be aware of missiles. You only have 1 life.\n\n" +
                 "The game will be endless until you die.", "How to play Dodger Bird",
                 JOptionPane.INFORMATION_MESSAGE));
-
+        // Display high score.
         highScores.addActionListener(e1 -> g.openHighScores());
+        // Exit game.
         exit.addActionListener(e4 -> System.exit(0));
         setFocusable(true);
     }

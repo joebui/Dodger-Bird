@@ -2,7 +2,6 @@ package GameFunctions;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Statement;
 
 public class GameOver extends JPanel {
     private JButton back;
@@ -18,7 +17,7 @@ public class GameOver extends JPanel {
     }
 
     public void displayTime() {
-        JLabel title = new JLabel("GAME OVER");
+        JLabel title = new JLabel("YOU FAILED TO SURVIVE");
         JLabel time = new JLabel();
 
         JPanel p1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 45, 45));

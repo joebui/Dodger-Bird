@@ -13,7 +13,7 @@ public class Database {
     private Statement stmt;
 
     public Database() {
-        // Check connection to sqlite database file.
+        // Check connection to SQLite database file.
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:achievement.db");
@@ -30,6 +30,7 @@ public class Database {
             StringBuilder builder = new StringBuilder();
             builder.append(t / 60); builder.append(":"); builder.append(t % 60);
 
+            // Insert new record in the database.
             String sql = "INSERT INTO achievement (name, time, exactTime) VALUES ( \""
                     + name + "\",\""
                     + builder.toString() + "\"," +
@@ -44,8 +45,10 @@ public class Database {
     public void listTopTenResults(ArrayList<JLabel> names, ArrayList<JLabel> times) {
         try {
             stmt = c.createStatement();
+            // Get top 10 achievement.
             ResultSet resultSet = stmt.executeQuery("SELECT * FROM achievement ORDER BY exactTime DESC LIMIT 10;");
             while (resultSet.next()) {
+                // Store the name and time to display.
                 JLabel name = new JLabel(String.valueOf(resultSet.getString(2)));
                 JLabel time = new JLabel(String.valueOf(resultSet.getString(3)));
                 name.setForeground(Color.WHITE); name.setFont(new Font("Arial", Font.PLAIN, 14));

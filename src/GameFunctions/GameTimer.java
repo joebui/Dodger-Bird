@@ -7,7 +7,6 @@ public class GameTimer extends Observer {
     private int time;
     private int minute;
     private int second;
-    private int countSecond;
     private Thread timerThread;
 
     public GameTimer(Bird bird) {
@@ -22,7 +21,6 @@ public class GameTimer extends Observer {
                     while (true) {
                         // Increase number of seconds.
                         increaseTime();
-                        countSecond++;
                         sleep(1000);
                     }
                 } catch (InterruptedException e) {
@@ -35,10 +33,6 @@ public class GameTimer extends Observer {
 
     public int getMinute() {
         return minute;
-    }
-
-    public int getCountSecond() {
-        return countSecond;
     }
 
     public int getSecond() {

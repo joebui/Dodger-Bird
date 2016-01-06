@@ -45,18 +45,6 @@ public abstract class Obstacle {
         return isVisible;
     }
 
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public Rectangle getBound() {
         return new Rectangle(x, y, width, height);
     }

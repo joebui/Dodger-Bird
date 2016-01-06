@@ -143,7 +143,7 @@ public class GameScreen extends JPanel implements ActionListener {
             timer.stop();
         }
 
-        if (gameTimer.getCountSecond() > pastSecond) {
+        if (gameTimer.getTime() > pastSecond) {
             spikeSpeed += 1;
             missileSpeed += 1;
             pastSecond += 30;
@@ -271,7 +271,7 @@ public class GameScreen extends JPanel implements ActionListener {
                             Obstacle wheel = factory.getObstacle("spike", 1000, new Random().nextInt(610) + 10, spikeSpeed);
                             spikes.add((Spikes) wheel);
                         }
-                        sleep(2000);
+                        sleep(1000);
                     }
                 } catch (Exception e) {
                     System.out.println(e);
@@ -287,7 +287,7 @@ public class GameScreen extends JPanel implements ActionListener {
             @Override
             public void run() {
                 try {
-                    sleep(1500);
+                    sleep(1000);
                     while (true) {
                         // Spawn flame
                         if (!isPause) {

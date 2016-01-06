@@ -25,11 +25,12 @@ public class Game extends Observer {
         frame = new JFrame();
         menu = new Menu(this);
         bird = Bird.getInstance();
+        bird.attach(this);
         careTaker = new CareTaker();
         careTaker.add(bird.saveToMemento());
-        bird.attach(this);
         gameOver = new GameOver(this);
 
+        // Display main menu.
         frame.add(menu);
         frame.setSize(1024, 720);
         frame.setResizable(false);
@@ -44,6 +45,7 @@ public class Game extends Observer {
     public static Game getGameInstance() { return game; }
 
     public void openMainMenu() {
+        // Remove game over screen and open main menu.
         bird.getFromMemento(careTaker.get());
         gameOver.setVisible(false);
         gameOver = null;
@@ -53,7 +55,9 @@ public class Game extends Observer {
     }
 
     public void openGame() {
+        // Start background music.
         c.loop(Clip.LOOP_CONTINUOUSLY);
+        // Remove main menu and open game screen.
         menu.setVisible(false);
         gameOver = new GameOver(this);
         bird.initObstacle();
@@ -62,10 +66,10 @@ public class Game extends Observer {
         window.requestFocusInWindow();
     }
 
-    // Open game over screen.
     @Override
     public void update() {
         try {
+            // Play die sound
             c.stop();
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/die.wav"));
@@ -74,6 +78,8 @@ public class Game extends Observer {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+        // Open game over screen.
         window.setVisible(false);
         gameOver.displayTime();
         frame.add(gameOver);
@@ -83,6 +89,7 @@ public class Game extends Observer {
     }
 
     public void openHighScores() {
+        // Open high scores screen.
         menu.setVisible(false);
         highScore = new HighScore(database, game);
         frame.add(highScore);
