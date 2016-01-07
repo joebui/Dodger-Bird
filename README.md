@@ -7,7 +7,7 @@
 ## How to run the game
 -   Install IntelliJ IDEA Ultimate Edition (https://www.jetbrains.com/idea/#chooseYourEdition)
 -   To register for licensed with RMIT account, go to this website (https://www.jetbrains.com/student/)
--   Make your the Java JDK is already at the latest version for best performance
+-   Make sure your the Java JDK is already at the latest version for best performance
 -   Open the project with IntelliJ and press Run to run the game.
 
 ## References
