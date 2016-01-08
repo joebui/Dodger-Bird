@@ -23,33 +23,37 @@ public class Menu extends JPanel {
 
         JPanel t = new JPanel(new FlowLayout(FlowLayout.CENTER, 45, 45));
         title.setFont(new Font("Magneto", Font.BOLD, 40));
-        title.setForeground(Color.WHITE);
+        title.setForeground(Color.BLACK);
         t.add(title);
-        t.setBackground(Color.BLACK);
+        t.setOpaque(false);
+
         JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         play.setBackground(Color.GREEN);
         play.setFont(new Font("Arial", Font.BOLD, 30));
         play.setForeground(Color.WHITE);
         p.add(play);
-        p.setBackground(Color.BLACK);
+        p.setOpaque(false);
+
         JPanel h = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         highScores.setBackground(Color.ORANGE);
         highScores.setFont(new Font("Arial", Font.BOLD, 30));
         highScores.setForeground(Color.WHITE);
         h.add(highScores);
-        h.setBackground(Color.BLACK);
+        h.setOpaque(false);
+
         JPanel tu = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         howto.setBackground(Color.BLUE);
         howto.setFont(new Font("Arial", Font.BOLD, 30));
         howto.setForeground(Color.WHITE);
         tu.add(howto);
-        tu.setBackground(Color.BLACK);
+        tu.setOpaque(false);
+
         JPanel e = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         exit.setBackground(Color.RED);
         exit.setFont(new Font("Arial", Font.BOLD, 30));
         exit.setForeground(Color.WHITE);
         e.add(exit);
-        e.setBackground(Color.BLACK);
+        e.setOpaque(false);
 
         JPanel main = new JPanel(new GridLayout(5, 0));
         main.add(t);
@@ -57,6 +61,7 @@ public class Menu extends JPanel {
         main.add(h);
         main.add(tu);
         main.add(e);
+        main.setOpaque(false);
         add(main);
 
         // Play game

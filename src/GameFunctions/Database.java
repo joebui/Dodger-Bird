@@ -51,8 +51,8 @@ public class Database {
                 // Store the name and time to display.
                 JLabel name = new JLabel(String.valueOf(resultSet.getString(2)));
                 JLabel time = new JLabel(String.valueOf(resultSet.getString(3)));
-                name.setForeground(Color.WHITE); name.setFont(new Font("Arial", Font.PLAIN, 14));
-                time.setForeground(Color.WHITE); time.setFont(new Font("Arial", Font.PLAIN, 14));
+                name.setForeground(Color.BLACK); name.setFont(new Font("Arial", Font.PLAIN, 14));
+                time.setForeground(Color.BLACK); time.setFont(new Font("Arial", Font.PLAIN, 14));
                 names.add(name);
                 times.add(time);
             }

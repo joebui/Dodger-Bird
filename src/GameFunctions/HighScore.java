@@ -14,24 +14,25 @@ public class HighScore extends JPanel {
 
         database.listTopTenResults(names, times);
         JLabel title = new JLabel("HIGH SCORE");
+        title.setForeground(Color.BLACK);
 
         JPanel p1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 45, 45));
         title.setFont(new Font("Magneto", Font.BOLD, 40));
         title.setForeground(Color.WHITE);
         p1.add(title);
-        p1.setBackground(Color.BLACK);
+        p1.setOpaque(false);
 
         JPanel p2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel a = new JPanel(new GridLayout(names.size() + 1, 2, 100, 5));
-        JLabel n  = new JLabel("Name"); n.setForeground(Color.WHITE); n.setFont(new Font("Arial", Font.BOLD, 16));
-        JLabel t = new JLabel("Time"); t.setForeground(Color.WHITE); t.setFont(new Font("Arial", Font.BOLD, 16));
+        JLabel n  = new JLabel("Name"); n.setForeground(Color.BLACK); n.setFont(new Font("Arial", Font.BOLD, 16));
+        JLabel t = new JLabel("Time"); t.setForeground(Color.BLACK); t.setFont(new Font("Arial", Font.BOLD, 16));
         a.add(n); a.add(t);
         for (int i = 0; i < names.size(); i++) {
             a.add(names.get(i));
             a.add(times.get(i));
         }
-        a.setBackground(Color.BLACK);
-        p2.setBackground(Color.BLACK);
+        a.setOpaque(false);
+        p2.setOpaque(false);
         p2.add(a, BorderLayout.CENTER);
 
         JPanel p3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 45, 60));
@@ -40,12 +41,13 @@ public class HighScore extends JPanel {
         back.setFont(new Font("Arial", Font.BOLD, 30));
         back.setForeground(Color.WHITE);
         p3.add(back);
-        p3.setBackground(Color.BLACK);
+        p3.setOpaque(false);
 
         back.addActionListener(e -> game.backToMenuFromHighScore());
 
         JPanel main = new JPanel(new GridLayout(3, 0));
         main.add(p1); main.add(p2); main.add(p3);
+        main.setOpaque(false);
         add(main);
         setLayout(new FlowLayout(FlowLayout.CENTER));
         setFocusable(true);
