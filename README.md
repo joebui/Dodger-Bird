@@ -29,3 +29,5 @@ http://new-monster.wikia.com/wiki/Bullet_Bill
 
 http://zetcode.com/tutorials/javagamestutorial/
 
+https://bitbucket.org/xerial/sqlite-jdbc/downloads
+
