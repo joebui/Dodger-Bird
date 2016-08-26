@@ -40,6 +40,11 @@ public class HighScore extends JPanel {
         back.setBackground(Color.RED);
         back.setFont(new Font("Arial", Font.BOLD, 30));
         back.setForeground(Color.WHITE);
+
+        // FOR MAC ONLY
+        back.setOpaque(true);
+        back.setBorderPainted(false);
+        // FOR MAC ONLY
         p3.add(back);
         p3.setOpaque(false);
 

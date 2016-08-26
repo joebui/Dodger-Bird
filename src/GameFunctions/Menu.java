@@ -28,16 +28,26 @@ public class Menu extends JPanel {
         t.setOpaque(false);
 
         JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
-        play.setBackground(Color.GREEN);
+        play.setBackground(Color.BLUE);
         play.setFont(new Font("Arial", Font.BOLD, 30));
         play.setForeground(Color.WHITE);
+
+        // FOR MAC ONLY
+        play.setOpaque(true);
+        play.setBorderPainted(false);
+        // FOR MAC ONLY
         p.add(play);
         p.setOpaque(false);
 
         JPanel h = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
-        highScores.setBackground(Color.ORANGE);
+        highScores.setBackground(Color.BLUE);
         highScores.setFont(new Font("Arial", Font.BOLD, 30));
         highScores.setForeground(Color.WHITE);
+
+        // FOR MAC ONLY
+        highScores.setOpaque(true);
+        highScores.setBorderPainted(false);
+        // FOR MAC ONLY
         h.add(highScores);
         h.setOpaque(false);
 
@@ -45,6 +55,11 @@ public class Menu extends JPanel {
         howto.setBackground(Color.BLUE);
         howto.setFont(new Font("Arial", Font.BOLD, 30));
         howto.setForeground(Color.WHITE);
+
+        // FOR MAC ONLY
+        howto.setOpaque(true);
+        howto.setBorderPainted(false);
+        // FOR MAC ONLY
         tu.add(howto);
         tu.setOpaque(false);
 
@@ -52,6 +67,11 @@ public class Menu extends JPanel {
         exit.setBackground(Color.RED);
         exit.setFont(new Font("Arial", Font.BOLD, 30));
         exit.setForeground(Color.WHITE);
+
+        // FOR MAC ONLY
+        exit.setOpaque(true);
+        exit.setBorderPainted(false);
+        // FOR MAC ONLY
         e.add(exit);
         e.setOpaque(false);
 
