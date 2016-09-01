@@ -46,13 +46,13 @@ public class Database {
         try {
             stmt = c.createStatement();
             // Get top 10 achievement.
-            ResultSet resultSet = stmt.executeQuery("SELECT * FROM achievement ORDER BY exactTime DESC LIMIT 10;");
+            ResultSet resultSet = stmt.executeQuery("SELECT * FROM achievement ORDER BY exactTime DESC LIMIT 7;");
             while (resultSet.next()) {
                 // Store the name and time to display.
                 JLabel name = new JLabel(String.valueOf(resultSet.getString(2)));
                 JLabel time = new JLabel(String.valueOf(resultSet.getString(3)));
-                name.setForeground(Color.BLACK); name.setFont(new Font("Arial", Font.PLAIN, 14));
-                time.setForeground(Color.BLACK); time.setFont(new Font("Arial", Font.PLAIN, 14));
+                name.setForeground(Color.BLACK); name.setFont(new Font("Arial", Font.PLAIN, 16));
+                time.setForeground(Color.BLACK); time.setFont(new Font("Arial", Font.PLAIN, 16));
                 names.add(name);
                 times.add(time);
             }

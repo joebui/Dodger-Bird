@@ -24,8 +24,8 @@ public class HighScore extends JPanel {
 
         JPanel p2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel a = new JPanel(new GridLayout(names.size() + 1, 2, 100, 5));
-        JLabel n  = new JLabel("Name"); n.setForeground(Color.BLACK); n.setFont(new Font("Arial", Font.BOLD, 16));
-        JLabel t = new JLabel("Time"); t.setForeground(Color.BLACK); t.setFont(new Font("Arial", Font.BOLD, 16));
+        JLabel n  = new JLabel("Name"); n.setForeground(Color.BLACK); n.setFont(new Font("Arial", Font.BOLD, 20));
+        JLabel t = new JLabel("Time"); t.setForeground(Color.BLACK); t.setFont(new Font("Arial", Font.BOLD, 20));
         a.add(n); a.add(t);
         for (int i = 0; i < names.size(); i++) {
             a.add(names.get(i));
@@ -50,7 +50,7 @@ public class HighScore extends JPanel {
 
         back.addActionListener(e -> game.backToMenuFromHighScore());
 
-        JPanel main = new JPanel(new GridLayout(3, 0));
+        JPanel main = new JPanel(new GridLayout(3, 0, 10, 10));
         main.add(p1); main.add(p2); main.add(p3);
         main.setOpaque(false);
         add(main);
