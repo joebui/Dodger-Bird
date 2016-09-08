@@ -294,7 +294,7 @@ public class GameScreen extends JPanel implements ActionListener {
                             Obstacle flame = factory.getObstacle("flame", 1000, bird.getY() + bird.getHeight() / 8, spikeSpeed);
                             flames.add((Flame) flame);
                         }
-                        sleep(2000);
+                        sleep(1500);
                     }
                 } catch (Exception e) {
                     System.out.println(e);
